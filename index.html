@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ScholarBridge helps students discover scholarships, understand eligibility and prepare applications.">
+  <title>ScholarBridge | Student Scholarship Portal</title>
+  <style>
+    :root {
+      --navy:#172554; --blue:#3157d5; --blue-dark:#2444b4; --pale:#eef3ff;
+      --ink:#202b43; --muted:#667085; --line:#e7eaf1; --white:#fff;
+      --green:#14845b; --gold:#f5b942; --shadow:0 14px 38px rgba(28,45,90,.09);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:#f8faff;line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    button,input,select{font:inherit}
+    .container{width:min(1120px,92%);margin:auto}
+    header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{font-weight:800;font-size:1.3rem;color:var(--navy);letter-spacing:-.5px}
+    .brand span{color:var(--blue)}
+    .nav-links{display:flex;align-items:center;gap:26px;color:#475467;font-size:.94rem}
+    .nav-links a:hover{color:var(--blue)}
+    .menu-btn{display:none;border:0;background:none;font-size:1.5rem;color:var(--navy)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:10px;padding:11px 18px;background:var(--blue);color:white;font-weight:700;cursor:pointer;transition:.2s}
+    .btn:hover{background:var(--blue-dark);transform:translateY(-1px)}
+    .btn-outline{background:white;color:var(--blue);border:1px solid #cbd5ff}
+    .btn-outline:hover{background:var(--pale);color:var(--blue-dark)}
+    .hero{background:linear-gradient(120deg,#172554 0%,#263f91 60%,#4267dc 100%);color:white;padding:76px 0 70px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:48px}
+    .eyebrow{display:inline-block;color:#d9e3ff;background:#ffffff18;border:1px solid #ffffff35;border-radius:30px;padding:6px 13px;font-size:.82rem;font-weight:700}
+    h1{font-size:clamp(2.35rem,5vw,3.8rem);line-height:1.12;letter-spacing:-1.7px;margin:20px 0}
+    .hero p{color:#e1e8ff;font-size:1.08rem;max-width:590px;margin:0 0 27px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hero .btn{background:#fff;color:var(--navy)}
+    .hero .btn:hover{background:#eaf0ff}
+    .hero .btn-outline{background:transparent;color:white;border-color:#ffffff80}
+    .hero .btn-outline:hover{background:#ffffff18}
+    .hero-art{background:#ffffff12;border:1px solid #ffffff35;border-radius:26px;padding:27px;box-shadow:0 20px 55px #101c4b55}
+    .art-icon{font-size:4.5rem;text-align:center;margin:4px 0 14px}
+    .art-card{background:white;color:var(--ink);border-radius:15px;padding:17px;margin-top:12px}
+    .art-card small{color:var(--muted)}
+    .progress{height:8px;background:#e9edfa;border-radius:20px;margin-top:10px;overflow:hidden}
+    .progress span{display:block;width:72%;height:100%;background:var(--green);border-radius:20px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-28px;position:relative}
+    .stat{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:20px;border-radius:15px;text-align:center}
+    .stat strong{display:block;font-size:1.65rem;color:var(--navy)}
+    .stat span{font-size:.88rem;color:var(--muted)}
+    section{padding:70px 0}
+    .section-head{text-align:center;max-width:680px;margin:0 auto 30px}
+    .section-head h2{font-size:2rem;letter-spacing:-.6px;color:var(--navy);margin:0 0 8px}
+    .section-head p{color:var(--muted);margin:0}
+    .search-panel{background:white;border:1px solid var(--line);border-radius:17px;padding:18px;box-shadow:var(--shadow);display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:12px;margin-bottom:25px}
+    .field label{display:block;font-size:.8rem;font-weight:700;color:#475467;margin:0 0 6px}
+    .field input,.field select{width:100%;border:1px solid #d9deea;border-radius:9px;padding:11px 12px;background:#fff;color:var(--ink);outline:none}
+    .field input:focus,.field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #3157d51a}
+    .search-panel .btn{align-self:end;min-height:44px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .scholarship{background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px;box-shadow:0 5px 18px #1b2d5b08;display:flex;flex-direction:column}
+    .card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .tag{background:#eef3ff;color:#3157d5;border-radius:30px;padding:5px 10px;font-size:.75rem;font-weight:800}
+    .bookmark{border:1px solid var(--line);background:white;border-radius:9px;padding:6px 9px;cursor:pointer}
+    .bookmark.saved{color:#d18b00;background:#fff8e8;border-color:#f4d58a}
+    .scholarship h3{font-size:1.13rem;color:var(--navy);margin:17px 0 7px}
+    .scholarship p{color:var(--muted);font-size:.9rem;margin:0 0 15px}
+    .details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 18px}
+    .detail{background:#f7f9ff;padding:9px 10px;border-radius:9px}
+    .detail small{display:block;color:var(--muted);font-size:.72rem}
+    .detail strong{font-size:.88rem;color:var(--ink)}
+    .scholarship .btn{margin-top:auto;width:100%}
+    .empty{grid-column:1/-1;text-align:center;background:#fff;border:1px dashed #cbd3e3;border-radius:14px;padding:35px;color:var(--muted)}
+    .how{background:#f0f4ff}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .step{background:#fff;border-radius:15px;padding:24px;border:1px solid #e2e8fb}
+    .step-num{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--pale);color:var(--blue);font-weight:800;font-size:1.1rem}
+    .step h3{color:var(--navy);margin:14px 0 6px}
+    .step p{color:var(--muted);font-size:.92rem;margin:0}
+    .notice{background:#fff8e8;border:1px solid #f5dfaa;color:#73551b;padding:14px 17px;border-radius:12px;font-size:.9rem;margin-top:22px}
+    .faq-list{max-width:780px;margin:auto}
+    .faq-item{background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+    .faq-q{width:100%;border:0;background:#fff;padding:17px 19px;text-align:left;font-weight:750;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;gap:15px}
+    .faq-a{display:none;padding:0 19px 17px;color:var(--muted);font-size:.93rem}
+    .faq-item.open .faq-a{display:block}
+    footer{background:#172554;color:#dbe4ff;padding:32px 0}
+    .footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    footer p{margin:5px 0;color:#bdc9ed;font-size:.88rem}
+    .modal-backdrop{display:none;position:fixed;inset:0;background:#10182bcc;z-index:30;align-items:center;justify-content:center;padding:18px}
+    .modal-backdrop.show{display:flex}
+    .modal{background:white;border-radius:18px;padding:25px;width:min(490px,100%);max-height:90vh;overflow:auto;box-shadow:0 25px 70px #0004}
+    .modal-head{display:flex;justify-content:space-between;align-items:center;gap:15px}
+    .modal-head h3{margin:0;color:var(--navy)}
+    .close{border:0;background:#f1f3f8;border-radius:8px;padding:5px 10px;cursor:pointer;font-size:1.2rem}
+    .modal .field{margin-top:13px}
+    .modal .btn{width:100%;margin-top:18px}
+    .success{display:none;margin-top:14px;padding:12px;border-radius:9px;background:#eaf8f1;color:#126b49;font-size:.9rem}
+    @media(max-width:850px){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:480px}.cards{grid-template-columns:repeat(2,1fr)}.search-panel{grid-template-columns:1fr 1fr}.search-panel .btn{grid-column:span 2}}
+    @media(max-width:600px){.nav{height:64px}.menu-btn{display:block}.nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:white;padding:18px 4%;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:15px}.nav-links.show{display:flex}.nav .nav-cta{display:none}.hero{padding:58px 0}.stats{grid-template-columns:1fr;margin-top:16px}.cards,.steps{grid-template-columns:1fr}.search-panel{grid-template-columns:1fr}.search-panel .btn{grid-column:auto}section{padding:55px 0}.hero-art{padding:18px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home">Scholar<span>Bridge</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a><a href="#scholarships">Scholarships</a><a href="#how">How it works</a><a href="#faq">FAQs</a>
+    </nav>
+    <a class="btn nav-cta" href="#scholarships">Explore scholarships</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">YOUR FUTURE. YOUR OPPORTUNITY.</span>
+        <h1>Make your education dreams possible.</h1>
+        <p>Find scholarship opportunities, understand eligibility and take the next step towards your academic goals — all in one simple place.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#scholarships">Find scholarships ↗</a>
+          <a class="btn btn-outline" href="#how">How it works</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Scholarship application illustration">
+        <div class="art-icon">🎓</div>
+        <div class="art-card">
+          <strong>One step closer to your goals</strong>
+          <p style="font-size:.85rem;color:#667085;margin:5px 0 0">Discover opportunities that support your education.</p>
+          <div class="progress"><span></span></div>
+          <small>Explore • Prepare • Apply</small>
+        </div>
+        <div class="art-card" style="display:flex;align-items:center;gap:13px">
+          <span style="font-size:1.8rem">📚</span><div><strong>Learning has no limits</strong><br><small>Let opportunities find you.</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container stats" aria-label="Portal highlights">
+    <div class="stat"><strong>3</strong><span>Sample scholarships</span></div>
+    <div class="stat"><strong>100%</strong><span>Free to explore</span></div>
+    <div class="stat"><strong>1 place</strong><span>For your scholarship search</span></div>
+  </div>
+
+  <section id="scholarships">
+    <div class="container">
+      <div class="section-head">
+        <h2>Explore scholarships</h2>
+        <p>Search the sample opportunities below. Always confirm current dates and requirements on the official provider website.</p>
+      </div>
+      <div class="search-panel">
+        <div class="field"><label for="searchInput">Search by scholarship name</label><input id="searchInput" type="search" placeholder="e.g. Merit, education..."></div>
+        <div class="field"><label for="levelFilter">Study level</label><select id="levelFilter"><option value="all">All levels</option><option>School</option><option>Undergraduate</option><option>Postgraduate</option></select></div>
+        <div class="field"><label for="typeFilter">Scholarship type</label><select id="typeFilter"><option value="all">All types</option><option>Merit-based</option><option>Need-based</option><option>Government</option></select></div>
+        <button class="btn" id="searchBtn">Search</button>
+      </div>
+      <div class="cards" id="scholarshipCards">
+        <article class="scholarship" data-name="national merit scholarship" data-level="Undergraduate" data-type="Merit-based">
+          <div class="card-top"><span class="tag">MERIT-BASED</span><button class="bookmark" aria-label="Save scholarship" title="Save scholarship">☆</button></div>
+          <h3>National Merit Scholarship</h3><p>Example listing for students with strong academic performance who want support for higher education.</p>
+          <div class="details"><div class="detail"><small>Study level</small><strong>Undergraduate</strong></div><div class="detail"><small>Award</small><strong>Varies</strong></div><div class="detail"><small>Eligibility</small><strong>Academic merit</strong></div><div class="detail"><small>Deadline</small><strong>Check provider</strong></div></div>
+          <button class="btn apply-btn" data-title="National Merit Scholarship">View details</button>
+        </article>
+        <article class="scholarship" data-name="student support scholarship" data-level="Undergraduate" data-type="Need-based">
+          <div class="card-top"><span class="tag">NEED-BASED</span><button class="bookmark" aria-label="Save scholarship" title="Save scholarship">☆</button></div>
+          <h3>Student Support Scholarship</h3><p>Example listing designed to represent financial assistance for students who need help with education costs.</p>
+          <div class="details"><div class="detail"><small>Study level</small><strong>Undergraduate</strong></div><div class="detail"><small>Award</small><strong>Varies</strong></div><div class="detail"><small>Eligibility</small><strong>Family income criteria</strong></div><div class="detail"><small>Deadline</small><strong>Check provider</strong></div></div>
+          <button class="btn apply-btn" data-title="Student Support Scholarship">View details</button>
+        </article>
+        <article class="scholarship" data-name="school education scholarship" data-level="School" data-type="Government">
+          <div class="card-top"><span class="tag">GOVERNMENT</span><button class="bookmark" aria-label="Save scholarship" title="Save scholarship">☆</button></div>
+          <h3>School Education Scholarship</h3><p>Example listing for school students looking for support to continue their education.</p>
+          <div class="details"><div class="detail"><small>Study level</small><strong>School</strong></div><div class="detail"><small>Award</small><strong>Varies</strong></div><div class="detail"><small>Eligibility</small><strong>Scheme-specific</strong></div><div class="detail"><small>Deadline</small><strong>Check provider</strong></div></div>
+          <button class="btn apply-btn" data-title="School Education Scholarship">View details</button>
+        </article>
+      </div>
+      <p class="notice"><strong>Important:</strong> The scholarships shown here are sample entries for a student project, not verified active schemes. Replace them with official scholarship information and links before real-world use. Never pay an unknown person to secure a scholarship.</p>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="container">
+      <div class="section-head"><h2>How it works</h2><p>A simple process to help students get started.</p></div>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><h3>Discover</h3><p>Browse scholarship opportunities and search by study level or category.</p></div>
+        <div class="step"><div class="step-num">02</div><h3>Check eligibility</h3><p>Read the eligibility requirements and prepare the documents requested by the provider.</p></div>
+        <div class="step"><div class="step-num">03</div><h3>Apply safely</h3><p>Use the official scholarship portal to submit your application before its deadline.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="section-head"><h2>Frequently asked questions</h2><p>Quick answers to common scholarship questions.</p></div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q">What is a scholarship? <span>＋</span></button><div class="faq-a">A scholarship is financial support given to a student to help pay for education. It may be based on academic achievement, financial need, or other eligibility criteria.</div></div>
+        <div class="faq-item"><button class="faq-q">Can I apply for more than one scholarship? <span>＋</span></button><div class="faq-a">Often, yes. Check each scholarship's rules to make sure there are no restrictions on receiving multiple awards.</div></div>
+        <div class="faq-item"><button class="faq-q">Which documents might be required? <span>＋</span></button><div class="faq-a">Requirements vary. Providers may ask for academic records, identity or income documents, and other supporting information. Follow the official instructions.</div></div>
+        <div class="faq-item"><button class="faq-q">Does this demo submit a real application? <span>＋</span></button><div class="faq-a">No. This is a front-end demonstration for a student project. It does not connect to a database or submit information to a scholarship provider.</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div><a class="brand" style="color:white" href="#home">Scholar<span>Bridge</span></a><p>Helping students discover educational opportunities.</p></div>
+    <div><p>Student Scholarship Management System</p><p>© <span id="year"></span> ScholarBridge. Student project demo.</p></div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <div class="modal-head"><h3 id="modalTitle">Scholarship details</h3><button class="close" id="closeModal" aria-label="Close">×</button></div>
+    <p id="modalDescription" style="color:#667085;font-size:.93rem">This is a sample scholarship listing. Check the official provider for current eligibility, award details and deadlines.</p>
+    <form id="interestForm">
+      <div class="field"><label for="studentName">Student name</label><input id="studentName" required placeholder="Enter your name"></div>
+      <div class="field"><label for="studentEmail">Email address</label><input id="studentEmail" type="email" required placeholder="name@example.com"></div>
+      <div class="field"><label for="studentLevel">Current study level</label><select id="studentLevel" required><option value="">Select your level</option><option>School</option><option>Undergraduate</option><option>Postgraduate</option></select></div>
+      <button class="btn" type="submit">Submit interest (demo)</button>
+      <div class="success" id="successMessage" role="status">Demo submitted! No information has been sent or stored. Connect a secure backend for real applications.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const levelFilter = document.getElementById('levelFilter');
+  const typeFilter = document.getElementById('typeFilter');
+  const cards = [...document.querySelectorAll('.scholarship')];
+
+  function filterScholarships() {
+    const term = searchInput.value.trim().toLowerCase();
+    const level = levelFilter.value;
+    const type = typeFilter.value;
+    let visible = 0;
+    cards.forEach(card => {
+      const matches = card.dataset.name.includes(term) &&
+        (level === 'all' || card.dataset.level === level) &&
+        (type === 'all' || card.dataset.type === type);
+      card.style.display = matches ? 'flex' : 'none';
+      if (matches) visible++;
+    });
+    let empty = document.getElementById('emptyMessage');
+    if (!visible && !empty) {
+      empty = document.createElement('div');
+      empty.id = 'emptyMessage';
+      empty.className = 'empty';
+      empty.textContent = 'No matching scholarships found. Try changing your search or filters.';
+      document.getElementById('scholarshipCards').appendChild(empty);
+    } else if (visible && empty) empty.remove();
+  }
+  document.getElementById('searchBtn').addEventListener('click', filterScholarships);
+  searchInput.addEventListener('input', filterScholarships);
+  levelFilter.addEventListener('change', filterScholarships);
+  typeFilter.addEventListener('change', filterScholarships);
+
+  document.querySelectorAll('.bookmark').forEach(button => {
+    button.addEventListener('click', () => {
+      const saved = button.classList.toggle('saved');
+      button.textContent = saved ? '★' : '☆';
+      button.setAttribute('aria-pressed', String(saved));
+    });
+  });
+
+  const backdrop = document.getElementById('modalBackdrop');
+  document.querySelectorAll('.apply-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      document.getElementById('modalTitle').textContent = button.dataset.title;
+      document.getElementById('successMessage').style.display = 'none';
+      backdrop.classList.add('show');
+      document.getElementById('studentName').focus();
+    });
+  });
+  function closeModal(){backdrop.classList.remove('show');}
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', event => {if(event.target === backdrop) closeModal();});
+  document.addEventListener('keydown', event => {if(event.key === 'Escape') closeModal();});
+  document.getElementById('interestForm').addEventListener('submit', event => {
+    event.preventDefault();
+    document.getElementById('successMessage').style.display = 'block';
+  });
+
+  document.querySelectorAll('.faq-q').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.parentElement;
+      item.classList.toggle('open');
+      button.querySelector('span').textContent = item.classList.contains('open') ? '−' : '＋';
+    });
+  });
+  document.getElementById('menuBtn').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('show');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => {
+    document.getElementById('navLinks').classList.remove('show');
+  }));
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
